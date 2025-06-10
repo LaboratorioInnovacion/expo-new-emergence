@@ -5,6 +5,7 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
     const navigation = useNavigation();
@@ -23,7 +24,7 @@ export default function HomeScreen() {
         <HelloWave />
       </ThemedView>
             <ThemedView style={styles.stepContainer}>
-        <Button title="Ir a Registro" onPress={() => navigation.navigate('Register')} />
+        <Button title="Ir a Registro" onPress={() => router.push('/tabs/RegisterScreen')} />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
