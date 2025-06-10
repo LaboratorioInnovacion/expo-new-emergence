@@ -115,4 +115,4 @@ class MainActivity : ReactActivity() {
         val svc = Intent(this, LocationService::class.java)
         startForegroundService(this, svc)
     }
-}
+}}

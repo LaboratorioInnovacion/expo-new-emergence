@@ -1,0 +1,1 @@
+Buildear con ./gradle assembleRelease Para buildear con javascript nativo
