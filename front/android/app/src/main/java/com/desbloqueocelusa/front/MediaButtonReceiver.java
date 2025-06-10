@@ -1,4 +1,4 @@
-package com.desbloqueocelusa.HeadsetLocationApp;
+package com.desbloqueocelusa.front;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

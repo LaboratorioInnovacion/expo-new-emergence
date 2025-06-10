@@ -1,4 +1,4 @@
-package com.desbloqueocelusa.HeadsetLocationApp;
+package com.desbloqueocelusa.front;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

@@ -29,7 +29,24 @@ class MainActivity : ReactActivity() {
     // @generated end expo-splashscreen
     super.onCreate(null)
 
-    // Iniciar LocationService en foreground
+    // Solicita permisos si no están concedidos
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val permissions = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.FOREGROUND_SERVICE_LOCATION
+        )
+        val notGranted = permissions.any {
+            ActivityCompat.checkSelfPermission(this, it) != android.content.pm.PackageManager.PERMISSION_GRANTED
+        }
+        if (notGranted) {
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE)
+            // NO inicies el servicio aquí, espera a que el usuario acepte los permisos
+            return
+        }
+    }
+
+    // Ahora sí, inicia el servicio solo si tienes los permisos
     val svc = Intent(this, LocationService::class.java)
     startForegroundService(this, svc)
 
@@ -41,19 +58,6 @@ class MainActivity : ReactActivity() {
         Toast.LENGTH_LONG
       ).show()
       startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
-    }
-
-    // Solicitar permisos de ubicación si es Android 10 o superior
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-      ActivityCompat.requestPermissions(
-        this,
-        arrayOf(
-          Manifest.permission.ACCESS_FINE_LOCATION,
-          Manifest.permission.ACCESS_COARSE_LOCATION,
-          Manifest.permission.FOREGROUND_SERVICE_LOCATION
-        ),
-        REQUEST_CODE
-      )
     }
   }
 
@@ -104,4 +108,11 @@ class MainActivity : ReactActivity() {
       // because it's doing more than [Activity.moveTaskToBack] in fact.
       super.invokeDefaultOnBackPressed()
   }
+
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    if (requestCode == REQUEST_CODE && grantResults.all { it == android.content.pm.PackageManager.PERMISSION_GRANTED }) {
+        val svc = Intent(this, LocationService::class.java)
+        startForegroundService(this, svc)
+    }
 }
