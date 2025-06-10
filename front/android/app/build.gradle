@@ -104,9 +104,9 @@ android {
         }
         release {
             storeFile file('my-release-key.keystore')
-            storePassword 'TU_PASSWORD'
+            storePassword 'Eldragon97'
             keyAlias 'my-key-alias'
-            keyPassword 'TU_PASSWORD'
+            keyPassword 'Eldragon97'
         }
     }
     buildTypes {

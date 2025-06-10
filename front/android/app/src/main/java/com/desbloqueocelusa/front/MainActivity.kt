@@ -57,16 +57,19 @@ class MainActivity : ReactActivity() {
         "Por favor activa el servicio de accesibilidad",
         Toast.LENGTH_LONG
       ).show()
-      startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+      android.os.Handler(mainLooper).postDelayed({
+        startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+      }, 500)
     }
   }
 
   private fun isAccessibilityEnabled(): Boolean {
+    val expectedService = "$packageName/.MyAccessibilityService"
     val setting = Settings.Secure.getString(
-      contentResolver,
-      Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
-    )
-    return setting?.contains(packageName) == true
+        contentResolver,
+        Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+    ) ?: return false
+    return setting.split(':').any { it.equals(expectedService, ignoreCase = true) }
   }
 
   /**

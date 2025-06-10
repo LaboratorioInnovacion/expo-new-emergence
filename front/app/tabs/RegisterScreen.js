@@ -16,9 +16,13 @@ export default function RegisterScreen({ navigation }) {
     }
     // Guarda los datos en AsyncStorage
     await AsyncStorage.setItem('user_data', JSON.stringify({ name, phone, document, email }));
-    await NativeModules.UserDataBridge.saveUserData(name, phone, document, email);
-    Alert.alert('Registro exitoso');
-    navigation.goBack();
+    try {
+      await NativeModules.UserDataBridge.saveUserData(name, phone, document, email);
+      Alert.alert('Registro exitoso');
+      navigation.goBack();
+    } catch (e) {
+      Alert.alert('Error al guardar los datos');
+    }
   };
 
   return (
