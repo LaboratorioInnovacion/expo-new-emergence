@@ -24,7 +24,7 @@ export default function HomeScreen() {
         <HelloWave />
       </ThemedView>
             <ThemedView style={styles.stepContainer}>
-        <Button title="Ir a Registro" onPress={() => router.push('/tabs/RegisterScreen')} />
+        <Button title="Ir a Registro" onPress={() => router.push('/RegisterScreen')} />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
